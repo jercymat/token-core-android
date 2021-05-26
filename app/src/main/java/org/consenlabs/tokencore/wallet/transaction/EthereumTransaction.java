@@ -74,6 +74,13 @@ public class EthereumTransaction implements TransactionSigner {
     return new TxSignResult(signedTx, txHash);
   }
 
+  public TxSignResult signTransaction(String chainID, byte[] privateKey) {
+
+    String signedTx = signTransaction(Integer.parseInt(chainID), privateKey);
+    String txHash = this.calcTxHash(signedTx);
+    return new TxSignResult(signedTx, txHash);
+  }
+
   String signTransaction(int chainId, byte[] privateKey) {
     SignatureData signatureData = new SignatureData(chainId, new byte[]{}, new byte[]{});
     byte[] encodedTransaction = encodeToRLP(signatureData);
